@@ -9,7 +9,12 @@ type Props = {
   onCopy: () => void;
 };
 
-export default function AppBar({ version, shareUrl, onRequestShare, onCopy }: Props) {
+export default function AppBar({
+  version,
+  shareUrl,
+  onRequestShare,
+  onCopy
+}: Props) {
   return (
     <PageHeader
       title="TypeScript playground"
@@ -28,7 +33,7 @@ export default function AppBar({ version, shareUrl, onRequestShare, onCopy }: Pr
         </Popover>
       ]}
     >
-      <p>
+      <p style={{ margin: 0 }}>
         The unofficial playground for advanced TypeScript users. It can install
         npm packages, highly configurable.
       </p>

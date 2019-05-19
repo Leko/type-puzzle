@@ -11,6 +11,7 @@ import { useNpmInstall } from "./hooks/useNpmInstall";
 import { Installer } from "./lib/npm/installer";
 import { Resolver } from "./lib/npm/resolver";
 import Share from "comlink-loader!./lib/share";
+import { Flex } from "./components/Flex";
 
 import "./style.css";
 import "antd/dist/antd.less";
@@ -121,38 +122,22 @@ function App() {
   }, []);
 
   return (
-    <div
-      style={{
-        height: "100%"
-      }}
-    >
+    <>
       <Suspense fallback={null}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            flex: 1,
-            height: "100%"
-          }}
-        >
+        <Flex direction="column" flex={1} style={{ height: "100%" }}>
           <AppBar
             version={version}
             shareUrl={`${location.origin}?c=${sharableConfig}`}
             onRequestShare={handleRequestShare}
             onCopy={() => message.success("Copied")}
           />
-          <div
-            style={{
-              display: "flex",
-              flex: 1
-            }}
-          >
+          <Flex flex={1}>
             <div
               style={{
-                padding: 8,
-                width: 220,
                 display: "flex",
-                flexDirection: "column"
+                flexDirection: "column",
+                padding: 8,
+                width: 220
               }}
             >
               <DependencyList
@@ -161,7 +146,7 @@ function App() {
                 onRequestOpenDialog={() => setShowDialog(true)}
               />
             </div>
-            <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+            <Flex flex={1} direction="column">
               <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="main.tsx" key="1" />
               </Tabs>
@@ -177,8 +162,8 @@ function App() {
                   }}
                 />
               </div>
-            </div>
-            <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+            </Flex>
+            <Flex flex={1} direction="column">
               <Tabs defaultActiveKey="1">
                 <Tabs.TabPane tab="tsconfig.json" key="1" />
               </Tabs>
@@ -193,8 +178,8 @@ function App() {
                   <span>Loading...</span>
                 )}
               </div>
-            </div>
-          </div>
+            </Flex>
+          </Flex>
           <Layout.Footer style={{ textAlign: "center" }}>
             &copy; 2019-{new Date().getFullYear()}{" "}
             <a href="https://github.com/Leko" target="_blank">
@@ -208,7 +193,7 @@ function App() {
               GitHub repository
             </a>
           </Layout.Footer>
-        </div>
+        </Flex>
         <NpmSearchDialog
           isOpen={showDialog}
           loading={loading}
@@ -219,7 +204,7 @@ function App() {
           onRequestInstall={handleInstall}
         />
       </Suspense>
-    </div>
+    </>
   );
 }
 
