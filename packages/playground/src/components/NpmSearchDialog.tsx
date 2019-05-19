@@ -30,8 +30,8 @@ export default function NpmSearchDialog({
   onChangeQuery,
   onRequestInstall
 }: Props) {
-  const handleChange = useCallback(value => {
-    onChangeQuery(value);
+  const handleChange = useCallback(event => {
+    onChangeQuery(event.target.value);
   }, []);
 
   return (
