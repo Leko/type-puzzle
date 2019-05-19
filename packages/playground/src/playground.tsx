@@ -10,18 +10,29 @@ import { useNpmSearch } from "./hooks/useNpmSearch";
 import { useNpmInstall } from "./hooks/useNpmInstall";
 import { Installer } from "./lib/npm/installer";
 import { Resolver } from "./lib/npm/resolver";
-import { Share } from "./lib/share";
+import Share from "comlink-loader!./lib/share";
 
 import "./style.css";
 import "antd/dist/antd.less";
 
-const AppBar = lazy(() => import(/* webpackChunkName: "AppBar" */ "./components/AppBar"));
-const NpmSearchDialog = lazy(() => import(/* webpackChunkName: "NpmSearchDialog" */ "./components/NpmSearchDialog"));
-const DependencyList = lazy(() => import(/* webpackChunkName: "DependencyList" */ "./components/DependencyList"));
-const TSConfigEditor = lazy(() => import(/* webpackChunkName: "TSConfigEditor" */ "./components/TSConfigEditor"));
-const CodeEditor = lazy(() => import(/* webpackChunkName: "CodeEditor" */ "./components/CodeEditor"));
+const AppBar = lazy(() =>
+  import(/* webpackChunkName: "AppBar" */ "./components/AppBar")
+);
+const NpmSearchDialog = lazy(() =>
+  import(
+    /* webpackChunkName: "NpmSearchDialog" */ "./components/NpmSearchDialog"
+  )
+);
+const DependencyList = lazy(() =>
+  import(/* webpackChunkName: "DependencyList" */ "./components/DependencyList")
+);
+const TSConfigEditor = lazy(() =>
+  import(/* webpackChunkName: "TSConfigEditor" */ "./components/TSConfigEditor")
+);
+const CodeEditor = lazy(() =>
+  import(/* webpackChunkName: "CodeEditor" */ "./components/CodeEditor")
+);
 
-const share = new Share();
 const resolver = new Resolver();
 const installer = new Installer(languages.typescript.typescriptDefaults);
 
@@ -80,15 +91,14 @@ function App() {
     []
   );
   const handleRequestShare = useCallback(() => {
-    share
-      .encode({
-        code: code,
-        tsconfig: compilerOptions,
-        dependencies
-      })
-      .then(str => {
-        setSharableConfig(str);
-      });
+    const config = {
+      code: code,
+      tsconfig: compilerOptions,
+      dependencies
+    };
+    new Share()
+      .then(share => share.encode(config))
+      .then(str => setSharableConfig(str));
   }, [code, compilerOptions, dependencies]);
 
   useEffect(() => {
@@ -101,11 +111,13 @@ function App() {
       return;
     }
 
-    share.decode(configStr).then(config => {
-      setCode(config.code);
-      handleChangeTSConfig(JSON.stringify(config.tsconfig, null, 2));
-      config.dependencies.map(pkg => handleInstall(pkg));
-    });
+    new Share()
+      .then(share => share.decode(configStr))
+      .then(config => {
+        setCode(config.code);
+        handleChangeTSConfig(JSON.stringify(config.tsconfig, null, 2));
+        config.dependencies.map(pkg => handleInstall(pkg));
+      });
   }, []);
 
   return (
