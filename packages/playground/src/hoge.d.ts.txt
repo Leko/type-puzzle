@@ -1,6 +1,0 @@
-declare class Facts {
-  /**
-   * Returns the next fact
-   */
-  static next(): string;
-}

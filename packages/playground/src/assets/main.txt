@@ -1,0 +1,6 @@
+
+function greeting (message: string) {
+  return `Hello, ${message}!`
+}
+
+greeting('typescript')

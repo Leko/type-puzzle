@@ -1,8 +1,9 @@
 import { Uri, editor } from "monaco-editor";
-import defaultTSConfig from "raw-loader!./tsconfig.default.txt";
+import defaultCode from "raw-loader!./assets/main.txt";
+import defaultTSConfig from "raw-loader!./assets/tsconfig.txt";
 
 export const codeEditorModel = editor.createModel(
-  `import * as x from "external"\nconst tt : string = x.next();`,
+  defaultCode,
   "typescript",
   Uri.parse("file:///main.tsx")
 );
