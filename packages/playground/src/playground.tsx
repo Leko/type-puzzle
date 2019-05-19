@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { render } from "react-dom";
 import { message, Layout, Tabs } from "antd";
 import { parseConfigFileTextToJson, CompilerOptions } from "typescript";
@@ -13,13 +13,14 @@ import { TSConfigEditor } from "./components/TSConfigEditor";
 import { CodeEditor } from "./components/CodeEditor";
 import { useNpmSearch } from "./hooks/useNpmSearch";
 import { useNpmInstall } from "./hooks/useNpmInstall";
-import { NpmPackageSummary } from "./lib/npm/searcher";
 import { Installer } from "./lib/npm/installer";
 import { Resolver } from "./lib/npm/resolver";
+import { Share } from "./lib/share";
 
 import "./style.css";
 import "antd/dist/antd.less";
 
+const share = new Share();
 const resolver = new Resolver();
 const installer = new Installer(languages.typescript.typescriptDefaults);
 
@@ -28,26 +29,16 @@ function App() {
     primaryEditor,
     setPrimaryEditor
   ] = useState<editor.IStandaloneCodeEditor | null>(null);
+  const [code, setCode] = useState<string>("");
+  const [compilerOptionsStr, setCompilerOptionsStr] = useState<string>("");
   const [compilerOptions, setCompilerOptions] = useState<CompilerOptions>({});
-  const [dialogVisivility, setDialogVisivility] = useState<boolean>(false);
+  const [sharableConfig, setSharableConfig] = useState<string>("");
+  const [showDialog, setShowDialog] = useState<boolean>(false);
   const { loading, error, objects, setQuery } = useNpmSearch();
   const { dependencies, append, remove } = useNpmInstall();
 
-  // useEffect(() => {
-  //   const initialSettings = queryString.parse(location.search.slice(1));
-  //   console.log(initialSettings);
-  // });
-  const handleOpenDialog = useCallback(() => {
-    setDialogVisivility(true);
-  }, []);
-  const handleCloseDialog = useCallback(() => {
-    setDialogVisivility(false);
-  }, []);
-  const handleChangeQuery = useCallback(e => {
-    setQuery(e.target.value);
-  }, []);
-
   const handleChangeTSConfig = useCallback((tsconfig: string) => {
+    setCompilerOptionsStr(tsconfig);
     const { config, error } = parseConfigFileTextToJson(
       "tsconfig.json",
       tsconfig
@@ -61,31 +52,59 @@ function App() {
       config.compilerOptions
     );
   }, []);
-  const handleInstall = useCallback((pkg: NpmPackageSummary) => {
-    const { name, version } = pkg;
-    message.loading(`Install ${name}@${version} ...`, 10000);
-    resolver
-      .fetchFiles(name, version, compilerOptions)
-      .then(files => {
-        installer.install(name, version, files);
-        append(name, version);
-        message.destroy();
-        message.success(`Installed ${name}@${version}`);
-      })
-      .catch(e => {
-        message.destroy();
-        if (e.message.includes("404")) {
-          message.error(
-            `Install failed: ${name}@${version}\nIt does not provide type definitions.`
-          );
-          return;
-        }
-        console.error(e);
-        message.error(`Install failed: ${name}@${version}\n${e.message}`);
-      });
-  }, []);
+  const handleInstall = useCallback(
+    (pkg: { name: string; version: string }) => {
+      const { name, version } = pkg;
+      message.loading(`Install ${name}@${version} ...`, 10000);
+      resolver
+        .fetchFiles(name, version, compilerOptions)
+        .then(files => {
+          installer.install(name, version, files);
+          append(name, version);
+          message.destroy();
+          message.success(`Installed ${name}@${version}`);
+        })
+        .catch(e => {
+          message.destroy();
+          if (e.message.includes("404")) {
+            message.error(
+              `Install failed: ${name}@${version}\nIt does not provide type definitions.`
+            );
+            return;
+          }
+          console.error(e);
+          message.error(`Install failed: ${name}@${version}\n${e.message}`);
+        });
+    },
+    []
+  );
   const handleRequestShare = useCallback(() => {
-    console.log("TODO:");
+    share
+      .encode({
+        code: code,
+        tsconfig: compilerOptions,
+        dependencies
+      })
+      .then(str => {
+        setSharableConfig(str);
+      });
+  }, [code, compilerOptions, dependencies]);
+
+  useEffect(() => {
+    if (location.search === "") {
+      return;
+    }
+    const params = new URLSearchParams(location.search);
+    const configStr = params.get("c");
+    if (!configStr) {
+      return;
+    }
+
+    share.decode(configStr).then(config => {
+      setCode(config.code);
+      handleChangeTSConfig(JSON.stringify(config.tsconfig, null, 2));
+      config.dependencies.map(pkg => handleInstall(pkg));
+    });
   }, []);
 
   return (
@@ -100,7 +119,7 @@ function App() {
       >
         <AppBar
           version={version}
-          shareUrl={location.href}
+          shareUrl={`${location.origin}?c=${sharableConfig}`}
           onRequestShare={handleRequestShare}
           onCopy={() => message.success("Copied")}
         />
@@ -121,7 +140,7 @@ function App() {
             <DependencyList
               dependencies={dependencies}
               onRequestRemove={remove}
-              onRequestOpenDialog={handleOpenDialog}
+              onRequestOpenDialog={() => setShowDialog(true)}
             />
           </div>
           <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
@@ -131,8 +150,11 @@ function App() {
             <div style={{ flex: 1 }}>
               <CodeEditor
                 model={codeEditorModel}
+                value={code}
+                onChange={setCode}
                 editorDidMount={editor => {
                   setPrimaryEditor(editor);
+                  setCode(codeEditorModel.getValue());
                   handleChangeTSConfig(tsConfigEditorModel.getValue());
                 }}
               />
@@ -146,6 +168,7 @@ function App() {
               {primaryEditor ? (
                 <TSConfigEditor
                   model={tsConfigEditorModel}
+                  value={compilerOptionsStr}
                   onChange={handleChangeTSConfig}
                 />
               ) : (
@@ -169,12 +192,12 @@ function App() {
         </Layout.Footer>
       </div>
       <NpmSearchDialog
-        isOpen={dialogVisivility}
+        isOpen={showDialog}
         loading={loading}
         error={error}
         objects={objects}
-        onRequestClose={handleCloseDialog}
-        onChangeQuery={handleChangeQuery}
+        onRequestClose={() => setShowDialog(false)}
+        onChangeQuery={setQuery}
         onRequestInstall={handleInstall}
       />
     </>

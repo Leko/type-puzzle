@@ -4,14 +4,16 @@ import MonacoEditor from "react-monaco-editor";
 
 type Props = {
   model: editor.ITextModel;
+  value: string;
   onChange: (text: string) => void;
 };
 
-export function TSConfigEditor({ model, onChange }: Props) {
+export function TSConfigEditor({ model, value, onChange }: Props) {
   return (
     <MonacoEditor
       language="json"
       theme="vs-dark"
+      value={value}
       onChange={onChange}
       options={{
         model,
