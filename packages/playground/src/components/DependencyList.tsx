@@ -7,7 +7,7 @@ type Props = {
   onRequestOpenDialog: () => void;
 };
 
-export function DependencyList({
+export default function DependencyList({
   dependencies,
   onRequestRemove,
   onRequestOpenDialog

@@ -9,7 +9,7 @@ type Props = {
   editorDidMount: (editor: editor.IStandaloneCodeEditor) => void;
 };
 
-export function CodeEditor({ model, value, onChange, editorDidMount }: Props) {
+export default function CodeEditor({ model, value, onChange, editorDidMount }: Props) {
   return (
     <MonacoEditor
       language="typescript"

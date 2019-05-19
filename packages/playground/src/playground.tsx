@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { lazy, Suspense, useState, useCallback, useEffect } from "react";
 import { render } from "react-dom";
 import { message, Layout, Tabs } from "antd";
 import { parseConfigFileTextToJson, CompilerOptions } from "typescript";
@@ -6,11 +6,6 @@ import { editor, languages } from "monaco-editor";
 
 import { version } from "../package.json";
 import { codeEditorModel, tsConfigEditorModel } from "./models";
-import { AppBar } from "./components/AppBar";
-import { NpmSearchDialog } from "./components/NpmSearchDialog";
-import { DependencyList } from "./components/DependencyList";
-import { TSConfigEditor } from "./components/TSConfigEditor";
-import { CodeEditor } from "./components/CodeEditor";
 import { useNpmSearch } from "./hooks/useNpmSearch";
 import { useNpmInstall } from "./hooks/useNpmInstall";
 import { Installer } from "./lib/npm/installer";
@@ -19,6 +14,12 @@ import { Share } from "./lib/share";
 
 import "./style.css";
 import "antd/dist/antd.less";
+
+const AppBar = lazy(() => import(/* webpackChunkName: "AppBar" */ "./components/AppBar"));
+const NpmSearchDialog = lazy(() => import(/* webpackChunkName: "NpmSearchDialog" */ "./components/NpmSearchDialog"));
+const DependencyList = lazy(() => import(/* webpackChunkName: "DependencyList" */ "./components/DependencyList"));
+const TSConfigEditor = lazy(() => import(/* webpackChunkName: "TSConfigEditor" */ "./components/TSConfigEditor"));
+const CodeEditor = lazy(() => import(/* webpackChunkName: "CodeEditor" */ "./components/CodeEditor"));
 
 const share = new Share();
 const resolver = new Resolver();
@@ -108,99 +109,105 @@ function App() {
   }, []);
 
   return (
-    <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          flex: 1,
-          height: "100%"
-        }}
-      >
-        <AppBar
-          version={version}
-          shareUrl={`${location.origin}?c=${sharableConfig}`}
-          onRequestShare={handleRequestShare}
-          onCopy={() => message.success("Copied")}
-        />
+    <div
+      style={{
+        height: "100%"
+      }}
+    >
+      <Suspense fallback={null}>
         <div
           style={{
             display: "flex",
-            flex: 1
+            flexDirection: "column",
+            flex: 1,
+            height: "100%"
           }}
         >
+          <AppBar
+            version={version}
+            shareUrl={`${location.origin}?c=${sharableConfig}`}
+            onRequestShare={handleRequestShare}
+            onCopy={() => message.success("Copied")}
+          />
           <div
             style={{
-              padding: 8,
-              width: 220,
               display: "flex",
-              flexDirection: "column"
+              flex: 1
             }}
           >
-            <DependencyList
-              dependencies={dependencies}
-              onRequestRemove={remove}
-              onRequestOpenDialog={() => setShowDialog(true)}
-            />
-          </div>
-          <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-            <Tabs defaultActiveKey="1">
-              <Tabs.TabPane tab="main.tsx" key="1" />
-            </Tabs>
-            <div style={{ flex: 1 }}>
-              <CodeEditor
-                model={codeEditorModel}
-                value={code}
-                onChange={setCode}
-                editorDidMount={editor => {
-                  setPrimaryEditor(editor);
-                  setCode(codeEditorModel.getValue());
-                  handleChangeTSConfig(tsConfigEditorModel.getValue());
-                }}
+            <div
+              style={{
+                padding: 8,
+                width: 220,
+                display: "flex",
+                flexDirection: "column"
+              }}
+            >
+              <DependencyList
+                dependencies={dependencies}
+                onRequestRemove={remove}
+                onRequestOpenDialog={() => setShowDialog(true)}
               />
             </div>
-          </div>
-          <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-            <Tabs defaultActiveKey="1">
-              <Tabs.TabPane tab="tsconfig.json" key="1" />
-            </Tabs>
-            <div style={{ flex: 1 }}>
-              {primaryEditor ? (
-                <TSConfigEditor
-                  model={tsConfigEditorModel}
-                  value={compilerOptionsStr}
-                  onChange={handleChangeTSConfig}
+            <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+              <Tabs defaultActiveKey="1">
+                <Tabs.TabPane tab="main.tsx" key="1" />
+              </Tabs>
+              <div style={{ flex: 1 }}>
+                <CodeEditor
+                  model={codeEditorModel}
+                  value={code}
+                  onChange={setCode}
+                  editorDidMount={editor => {
+                    setPrimaryEditor(editor);
+                    setCode(codeEditorModel.getValue());
+                    handleChangeTSConfig(tsConfigEditorModel.getValue());
+                  }}
                 />
-              ) : (
-                <span>Loading...</span>
-              )}
+              </div>
+            </div>
+            <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+              <Tabs defaultActiveKey="1">
+                <Tabs.TabPane tab="tsconfig.json" key="1" />
+              </Tabs>
+              <div style={{ flex: 1 }}>
+                {primaryEditor ? (
+                  <TSConfigEditor
+                    model={tsConfigEditorModel}
+                    value={compilerOptionsStr}
+                    onChange={handleChangeTSConfig}
+                  />
+                ) : (
+                  <span>Loading...</span>
+                )}
+              </div>
             </div>
           </div>
+          <Layout.Footer style={{ textAlign: "center" }}>
+            &copy; 2019-{new Date().getFullYear()}{" "}
+            <a href="https://github.com/Leko" target="_blank">
+              Leko
+            </a>
+            {" / "}
+            <a
+              href="https://github.com/Leko/type-puzzle/tree/master/packages/playground"
+              target="_blank"
+            >
+              GitHub repository
+            </a>
+          </Layout.Footer>
         </div>
-        <Layout.Footer style={{ textAlign: "center" }}>
-          &copy; 2019-{new Date().getFullYear()}{" "}
-          <a href="https://github.com/Leko" target="_blank">
-            Leko
-          </a>
-          {" / "}
-          <a
-            href="https://github.com/Leko/type-puzzle/tree/master/packages/playground"
-            target="_blank"
-          >
-            GitHub repository
-          </a>
-        </Layout.Footer>
-      </div>
-      <NpmSearchDialog
-        isOpen={showDialog}
-        loading={loading}
-        error={error}
-        objects={objects}
-        onRequestClose={() => setShowDialog(false)}
-        onChangeQuery={setQuery}
-        onRequestInstall={handleInstall}
-      />
-    </>
+        <NpmSearchDialog
+          isOpen={showDialog}
+          loading={loading}
+          error={error}
+          objects={objects}
+          onRequestClose={() => setShowDialog(false)}
+          onChangeQuery={setQuery}
+          onRequestInstall={handleInstall}
+        />
+      </Suspense>
+    </div>
   );
 }
 

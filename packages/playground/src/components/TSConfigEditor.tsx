@@ -8,7 +8,7 @@ type Props = {
   onChange: (text: string) => void;
 };
 
-export function TSConfigEditor({ model, value, onChange }: Props) {
+export default function TSConfigEditor({ model, value, onChange }: Props) {
   return (
     <MonacoEditor
       language="json"

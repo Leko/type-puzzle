@@ -3,12 +3,15 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const theme = require("./theme");
 
 module.exports = {
-  entry: "./src/playground.tsx",
+  entry: {
+    ap: "./src/playground.tsx"
+  },
   mode: "development",
   devtool: "inline-source-map",
   output: {
     path: __dirname + "/dist",
-    filename: "index_bundle.js"
+    filename: "bundle.[name].js",
+    chunkFilename: "bundle.[name].js"
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"]

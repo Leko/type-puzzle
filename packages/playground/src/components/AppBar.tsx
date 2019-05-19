@@ -9,7 +9,7 @@ type Props = {
   onCopy: () => void;
 };
 
-export function AppBar({ version, shareUrl, onRequestShare, onCopy }: Props) {
+export default function AppBar({ version, shareUrl, onRequestShare, onCopy }: Props) {
   return (
     <PageHeader
       title="TypeScript playground"

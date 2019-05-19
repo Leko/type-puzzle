@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { Modal, Alert, List, Button, Input, Icon, Divider, Avatar } from "antd";
-import { NpmSearchResult, NpmPackageSummary } from "../hooks/useNpmSearch";
+import { NpmSearchResult, NpmPackageSummary } from "../lib/npm/searcher";
 
 type Props = {
   isOpen: boolean;
@@ -21,7 +21,7 @@ function PackageAvatar({ pkg }: { pkg: NpmPackageSummary }) {
   }
 }
 
-export function NpmSearchDialog({
+export default function NpmSearchDialog({
   isOpen,
   onRequestClose,
   loading,
