@@ -1,0 +1,27 @@
+{
+  "name": "type-puzzle",
+  "version": "1.0.0",
+  "description": "Web application to post and solve TypeScript type puzzle",
+  "main": "jest.config.js",
+  "devDependencies": {
+    "@types/jest": "^24.0.13",
+    "@types/node": "^12.0.2",
+    "@typescript-eslint/parser": "^1.9.0",
+    "eslint": "^5.16.0",
+    "jest": "^24.8.0",
+    "lerna": "^3.14.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.5"
+  },
+  "scripts": {
+    "lint": "eslint . --cache",
+    "test": "jest"
+  },
+  "repository": "Leko/type-puzzle",
+  "author": "Leko <leko.noor@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "js-untar": "^2.0.0",
+    "pako": "^1.0.10"
+  }
+}
