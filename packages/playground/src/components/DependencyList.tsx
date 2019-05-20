@@ -19,7 +19,6 @@ export default function DependencyList({
       </div>
       <List
         size="small"
-        // itemLayout="horizontal"
         dataSource={dependencies}
         renderItem={({ name, version }) => (
           <List.Item key={name}>
