@@ -23,6 +23,7 @@ export function useNpmSearch() {
       }
 
       setLoading(true);
+      setError(null);
       searcher
         .search(query, { page, perPage })
         .then(({ objects, total }) => {

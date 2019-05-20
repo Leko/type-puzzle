@@ -18,9 +18,12 @@ export class Installer {
       throw new Error(`${key} already installed. Please uninstall before call`);
     }
 
-    const disposables = files.map(file =>
-      this.languageService.addExtraLib(file.fileName, file.getFullText())
-    );
+    const disposables = files.map(file => {
+      return this.languageService.addExtraLib(
+        file.getFullText(),
+        `file:///node_modules/${name}${file.fileName}`
+      );
+    });
 
     this.cache.set(key, disposables);
   }

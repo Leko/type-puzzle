@@ -45,7 +45,15 @@ export class Resolver {
     const unpkg = new UnPkg(name, version);
     const pkgDetail = await unpkg.fetchAsJson<NpmPackage>("/package.json");
     const entryTypePath = getEntryTypeFileName(pkgDetail);
-    const visited: SourceFile[] = [];
+    const visited: SourceFile[] = [
+      {
+        fileName: "/package.json",
+        text:JSON.stringify(pkgDetail),
+        getFullText() {
+          return this.text
+        }
+      } as SourceFile
+    ];
     const open: string[] = [entryTypePath];
 
     while (open.length) {
