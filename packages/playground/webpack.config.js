@@ -1,16 +1,23 @@
 /* eslint-env node */
+const path = require("path");
 const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const PreloadWebpackPlugin = require("preload-webpack-plugin");
+const WebappWebpackPlugin = require("webapp-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 const theme = require("./theme");
+
+const ENTRY_PATH = path.resolve(__dirname, "src", "index.tsx");
+const DIST_PATH = path.resolve(__dirname, "dist");
 
 module.exports = {
   entry: {
-    app: "./src/index.tsx"
+    app: ENTRY_PATH
   },
   mode: "development",
   devtool: "inline-source-map",
   output: {
-    path: __dirname + "/dist",
+    path: DIST_PATH,
     filename: "bundle.[name].js",
     chunkFilename: "bundle.[name].js"
   },
@@ -58,17 +65,15 @@ module.exports = {
       languages: ["typescript", "json"]
     }),
     new HtmlWebpackPlugin({
-      // inject: false,
-      template: require("html-webpack-template"),
-
-      lang: "en",
+      template: path.resolve("static", "index.html"),
       title:
-        "TypeScript Playground | The unofficial playground for advanced TypeScript users",
-      appMountId: "root",
-      googleAnalytics: {
-        trackingId: "UA-140408943-1",
-        pageViewOnLoad: true
-      }
-    })
+        "TypeScript Playground | The unofficial playground for advanced TypeScript users"
+    }),
+    new WebappWebpackPlugin({
+      logo: path.resolve(__dirname, "static", "icon.png"),
+      inject: true
+    }),
+    new PreloadWebpackPlugin(),
+    new CompressionPlugin()
   ]
 };
