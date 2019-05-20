@@ -72,6 +72,7 @@ export function Playground() {
         .fetchFiles(name, version, compilerOptions)
         .then(files => {
           installer.install(name, version, files);
+          console.log({ dependencies });
           append(name, version);
           message.destroy();
           message.success(`Installed ${name}@${version}`);
@@ -88,7 +89,7 @@ export function Playground() {
           message.error(`Install failed: ${name}@${version}\n${e.message}`);
         });
     },
-    []
+    [dependencies]
   );
   const handleRequestShare = useCallback(() => {
     const config = {

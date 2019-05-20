@@ -12,13 +12,15 @@ export default function DependencyList({
   onRequestRemove,
   onRequestOpenDialog
 }: Props) {
+  console.log(dependencies);
   return (
     <>
       <div>
         <Typography.Text strong>Dependencies</Typography.Text>
       </div>
       <List
-        itemLayout="horizontal"
+        size="small"
+        // itemLayout="horizontal"
         dataSource={dependencies}
         renderItem={({ name, version }) => (
           <List.Item key={name}>

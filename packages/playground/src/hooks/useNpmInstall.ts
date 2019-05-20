@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 export function useNpmInstall() {
   const [dependencies, setDependencies] = useState<
     { name: string; version: string }[]
   >([]);
 
-  const append = (name: string, version: string) => {
-    setDependencies(dependencies.concat({ name, version }));
-  };
+  const append = useCallback(
+    (name: string, version: string) => {
+      console.log(dependencies, { name, version });
+      setDependencies(dependencies.concat([{ name, version }]));
+    },
+    [dependencies]
+  );
 
   const remove = (name: string, version: string) => {
     const index = dependencies.findIndex(

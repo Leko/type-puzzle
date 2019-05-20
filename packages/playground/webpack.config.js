@@ -76,7 +76,10 @@ module.exports = {
         theme_color: "#007ACC"
       }
     }),
-    new PreloadWebpackPlugin(),
+    new PreloadWebpackPlugin({
+      rel: "preload",
+      as: "script"
+    }),
     // https://github.com/webpack-contrib/compression-webpack-plugin#using-brotli
     new CompressionPlugin()
   ]
