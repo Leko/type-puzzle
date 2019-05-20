@@ -1,5 +1,4 @@
 import React, { lazy, Suspense, useState, useCallback, useEffect } from "react";
-import { render } from "react-dom";
 import { message, Layout, Tabs } from "antd";
 import { parseConfigFileTextToJson, CompilerOptions } from "typescript";
 import { editor, languages } from "monaco-editor";
@@ -37,7 +36,7 @@ const CodeEditor = lazy(() =>
 const resolver = new Resolver();
 const installer = new Installer(languages.typescript.typescriptDefaults);
 
-function App() {
+export function Playground() {
   const [
     primaryEditor,
     setPrimaryEditor
@@ -207,9 +206,3 @@ function App() {
     </>
   );
 }
-
-const div = document.createElement("div");
-div.setAttribute("id", "root");
-document.body.appendChild(div);
-
-render(<App />, document.getElementById("root"));
