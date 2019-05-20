@@ -58,11 +58,15 @@ module.exports = {
       languages: ["typescript", "json"]
     }),
     new HtmlWebpackPlugin({
+      // inject: false,
+      template: require("html-webpack-template"),
+
       lang: "en",
       title:
         "TypeScript Playground | The unofficial playground for advanced TypeScript users",
+      appMountId: "root",
       googleAnalytics: {
-        trackingId: "",
+        trackingId: "UA-140408943-1",
         pageViewOnLoad: true
       }
     })
