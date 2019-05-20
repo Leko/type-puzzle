@@ -16,14 +16,14 @@ firebase.performance();
 
 // The perfMetrics object is created by the code that goes in <head>.
 // https://github.com/GoogleChromeLabs/first-input-delay
-// @ts-ignore Cannot find name 'perfMetrics'
-perfMetrics.onFirstInputDelay(function(delay, evt) {
-  // @ts-ignore Cannot find name 'ga'
-  ga("send", "event", {
-    eventCategory: "Perf Metrics",
-    eventAction: "first-input-delay",
-    eventLabel: evt.type,
-    eventValue: Math.round(delay),
-    nonInteraction: true
-  });
-});
+// // @ts-ignore Cannot find name 'perfMetrics'
+// perfMetrics.onFirstInputDelay(function(delay, evt) {
+//   // @ts-ignore Cannot find name 'ga'
+//   ga("send", "event", {
+//     eventCategory: "Perf Metrics",
+//     eventAction: "first-input-delay",
+//     eventLabel: evt.type,
+//     eventValue: Math.round(delay),
+//     nonInteraction: true
+//   });
+// });

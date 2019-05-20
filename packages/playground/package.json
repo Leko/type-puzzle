@@ -2,7 +2,7 @@
   "name": "@type-puzzle/playground",
   "private": true,
   "version": "0.0.0",
-  "description": "TODO",
+  "description": "TypeScript Playground | The unofficial playground for advanced TypeScript users",
   "author": "Leko <leko.noor@gmail.com>",
   "license": "MIT",
   "repository": "Leko/type-puzzle",

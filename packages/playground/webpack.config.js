@@ -14,7 +14,7 @@ module.exports = {
   entry: {
     app: ENTRY_PATH
   },
-  mode: "development",
+  mode: process.env.NODE_ENV || "development",
   devtool: "inline-source-map",
   output: {
     path: DIST_PATH,
@@ -68,10 +68,16 @@ module.exports = {
       template: path.resolve("static", "index.html")
     }),
     new WebappWebpackPlugin({
+      inject: true,
       logo: path.resolve(__dirname, "static", "icon.png"),
-      inject: true
+      favicons: {
+        appName: "TypeScript playground",
+        appShortName: "Playground",
+        theme_color: "#007ACC"
+      }
     }),
     new PreloadWebpackPlugin(),
+    // https://github.com/webpack-contrib/compression-webpack-plugin#using-brotli
     new CompressionPlugin()
   ]
 };
