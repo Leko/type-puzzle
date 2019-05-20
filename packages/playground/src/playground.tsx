@@ -105,7 +105,7 @@ export function Playground() {
   const handleRequestShare = useCallback(() => {
     const config = {
       code: code,
-      tsconfig: compilerOptions,
+      tsconfig: { compilerOptions },
       dependencies
     };
     new Share()
