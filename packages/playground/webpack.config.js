@@ -65,9 +65,7 @@ module.exports = {
       languages: ["typescript", "json"]
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve("static", "index.html"),
-      title:
-        "TypeScript Playground | The unofficial playground for advanced TypeScript users"
+      template: path.resolve("static", "index.html")
     }),
     new WebappWebpackPlugin({
       logo: path.resolve(__dirname, "static", "icon.png"),

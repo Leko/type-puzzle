@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "type-puzzle"
+  },
+  "targets": {
+    "type-puzzle": {
+      "hosting": {
+        "playground": [
+          "playground-870ae"
+        ]
+      }
+    }
+  }
+}
