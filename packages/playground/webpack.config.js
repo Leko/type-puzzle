@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const PreloadWebpackPlugin = require("preload-webpack-plugin");
 const WebappWebpackPlugin = require("webapp-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const theme = require("./theme");
 
 const ENTRY_PATH = path.resolve(__dirname, "src", "index.tsx");
@@ -60,12 +61,18 @@ module.exports = {
     ]
   },
   plugins: [
+    new CopyPlugin([
+      {
+        from: path.resolve(__dirname, "static"),
+        to: path.resolve(DIST_PATH, "static")
+      }
+    ]),
     new MonacoWebpackPlugin({
       // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
       languages: ["typescript", "json"]
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve("static", "index.html")
+      template: path.resolve(__dirname, "static", "index.html")
     }),
     new WebappWebpackPlugin({
       inject: true,
