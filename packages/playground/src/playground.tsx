@@ -120,34 +120,6 @@ export function Playground() {
       });
   }, []);
 
-  // // Import completion
-  // useEffect(() => {
-  //   function createDependencyProposals() {
-  //     dependencies.map(dep => ({
-  //       label: `"${dep.name}"`,
-  //       kind: languages.CompletionItemKind.Function,
-  //       documentation: `${dep.name}@${dep.version}`,
-  //       insertText: dep.name
-  //     }));
-  //   }
-  //   const disposable = languages.registerCompletionItemProvider("typescript", {
-  //     provideCompletionItems(model, position) {
-  //       var textUntilPosition = model.getValueInRange({
-  //         startLineNumber: position.lineNumber,
-  //         startColumn: 1,
-  //         endLineNumber: position.lineNumber,
-  //         endColumn: position.column
-  //       });
-  //       var match = textUntilPosition.match(/from\s*["']([^"]*)["']?$/);
-  //       console.log(textUntilPosition, match);
-  //       return {
-  //         suggestions: match ? createDependencyProposals() : []
-  //       };
-  //     }
-  //   });
-  //   disposable.dispose();
-  // }, [dependencies]);
-
   return (
     <>
       <Suspense fallback={null}>
