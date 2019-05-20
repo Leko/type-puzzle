@@ -1,3 +1,4 @@
+/* eslint-env node */
 const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const theme = require("./theme");
@@ -56,6 +57,14 @@ module.exports = {
       // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
       languages: ["typescript", "json"]
     }),
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin({
+      lang: "en",
+      title:
+        "TypeScript Playground | The unofficial playground for advanced TypeScript users",
+      googleAnalytics: {
+        trackingId: "",
+        pageViewOnLoad: true
+      }
+    })
   ]
 };
