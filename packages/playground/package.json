@@ -13,6 +13,7 @@
   "dependencies": {
     "@sentry/browser": "^5.2.1",
     "antd": "^3.18.1",
+    "firebase": "^6.0.2",
     "normalize-package-data": "^2.5.0",
     "react": "^16.8.6",
     "react-copy-to-clipboard": "^5.0.1",

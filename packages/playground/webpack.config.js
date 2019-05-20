@@ -18,8 +18,8 @@ module.exports = {
   devtool: "inline-source-map",
   output: {
     path: DIST_PATH,
-    filename: "bundle.[name].js",
-    chunkFilename: "bundle.[name].js"
+    filename: "bundle.[name].[hash].js",
+    chunkFilename: "bundle.[name].[chunkhash].js"
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"]
