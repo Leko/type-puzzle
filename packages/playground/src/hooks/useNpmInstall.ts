@@ -6,8 +6,8 @@ export function useNpmInstall() {
   >([]);
 
   const append = useCallback(
-    (name: string, version: string) => {
-      setDependencies(dependencies.concat([{ name, version }]));
+    (pkgs: { name: string; version: string }[]) => {
+      setDependencies(dependencies.concat(pkgs));
     },
     [dependencies]
   );

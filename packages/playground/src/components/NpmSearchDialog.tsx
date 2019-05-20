@@ -1,15 +1,15 @@
 import React, { useCallback } from "react";
 import { Modal, Alert, List, Button, Input, Icon, Divider, Avatar } from "antd";
-import { NpmSearchResult, NpmPackageSummary } from "../lib/npm/searcher";
+import { NpmSearchResultItem, NpmPackageSummary } from "../lib/npm/searcher";
 
 type Props = {
   isOpen: boolean;
   loading: boolean;
   error: Error | null;
-  objects: NpmSearchResult[];
+  objects: NpmSearchResultItem[];
   onRequestClose: () => void;
   onChangeQuery: (query: string) => void;
-  onRequestInstall: (pkg: NpmPackageSummary) => void;
+  onRequestInstall: (pkgs: NpmPackageSummary[]) => void;
 };
 
 function PackageAvatar({ pkg }: { pkg: NpmPackageSummary }) {
@@ -66,7 +66,7 @@ export default function NpmSearchDialog({
               <List.Item
                 key={object.package.name}
                 style={{ cursor: "pointer" }}
-                onClick={() => onRequestInstall(object.package)}
+                onClick={() => onRequestInstall([object.package])}
               >
                 <List.Item.Meta
                   avatar={<PackageAvatar pkg={object.package} />}

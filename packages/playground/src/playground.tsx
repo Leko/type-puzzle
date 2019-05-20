@@ -1,6 +1,10 @@
 import React, { lazy, Suspense, useState, useCallback, useEffect } from "react";
 import { message, Layout, Tabs } from "antd";
-import { parseConfigFileTextToJson, CompilerOptions } from "typescript";
+import {
+  parseConfigFileTextToJson,
+  CompilerOptions,
+  SourceFile
+} from "typescript";
 import { editor, languages } from "monaco-editor";
 
 import { version } from "../package.json";
@@ -73,16 +77,30 @@ export function Playground() {
     [dependencies]
   );
   const handleInstall = useCallback(
-    (pkg: { name: string; version: string }) => {
-      const { name, version } = pkg;
-      message.loading(`Install ${name}@${version} ...`, 10000);
-      resolver
-        .fetchFiles(name, version, compilerOptions)
+    (pkgs: { name: string; version: string }[]) => {
+      const install = async (pkgs: { name: string; version: string }[]) => {
+        const files: SourceFile[] = [];
+        for (let pkg of pkgs) {
+          const { name, version } = pkg;
+          message.loading(`Install ${name}@${version} ...`, 10000);
+          const sources = await resolver.fetchFiles(
+            name,
+            version,
+            compilerOptions
+          );
+          files.push(...sources);
+        }
+        return files;
+      };
+
+      install(pkgs)
         .then(files => {
-          installer.install(name, version, files);
-          append(name, version);
           message.destroy();
-          message.success(`Installed ${name}@${version}`);
+          pkgs.forEach(({ name, version }) => {
+            installer.install(name, version, files);
+            message.success(`Installed ${name}@${version}`);
+          });
+          append(pkgs);
         })
         .catch(e => {
           message.destroy();
@@ -105,7 +123,7 @@ export function Playground() {
       dependencies
     };
     new Share()
-      .then(share => share.encode(config))
+      .then((share: Share) => share.encode(config))
       .then(str => setSharableConfig(str));
   }, [code, compilerOptions, dependencies]);
 
@@ -120,11 +138,11 @@ export function Playground() {
     }
 
     new Share()
-      .then(share => share.decode(configStr))
+      .then((share: Share) => share.decode(configStr))
       .then(config => {
         setCode(config.code);
         handleChangeTSConfig(JSON.stringify(config.tsconfig, null, 2));
-        config.dependencies.map(pkg => handleInstall(pkg));
+        handleInstall(config.dependencies);
       });
   }, []);
 
