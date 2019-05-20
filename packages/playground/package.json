@@ -1,7 +1,7 @@
 {
   "name": "@type-puzzle/playground",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "TypeScript Playground | The unofficial playground for advanced TypeScript users",
   "author": "Leko <leko.noor@gmail.com>",
   "license": "MIT",
