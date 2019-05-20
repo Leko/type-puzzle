@@ -5,7 +5,7 @@ const theme = require("./theme");
 
 module.exports = {
   entry: {
-    ap: "./src/index.tsx"
+    app: "./src/index.tsx"
   },
   mode: "development",
   devtool: "inline-source-map",
