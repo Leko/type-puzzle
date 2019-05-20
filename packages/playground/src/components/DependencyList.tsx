@@ -12,7 +12,6 @@ export default function DependencyList({
   onRequestRemove,
   onRequestOpenDialog
 }: Props) {
-  console.log(dependencies);
   return (
     <>
       <div>

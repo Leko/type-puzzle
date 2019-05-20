@@ -7,7 +7,6 @@ export function useNpmInstall() {
 
   const append = useCallback(
     (name: string, version: string) => {
-      console.log(dependencies, { name, version });
       setDependencies(dependencies.concat([{ name, version }]));
     },
     [dependencies]
@@ -22,7 +21,7 @@ export function useNpmInstall() {
     }
     const newDependencies = dependencies
       .slice(0, index)
-      .concat(dependencies.slice(index, -1));
+      .concat(dependencies.slice(index + 1));
     setDependencies(newDependencies);
   };
 

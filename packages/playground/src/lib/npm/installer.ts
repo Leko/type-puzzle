@@ -36,5 +36,6 @@ export class Installer {
     }
 
     cache.forEach(disposable => disposable.dispose());
+    this.cache.delete(key);
   }
 }

@@ -64,6 +64,14 @@ export function Playground() {
       config.compilerOptions
     );
   }, []);
+  const handleUninstall = useCallback(
+    (name: string, version: string) => {
+      installer.uninstall(name, version);
+      remove(name, version);
+      message.success(`Uninstalled ${name}@${version}`);
+    },
+    [dependencies]
+  );
   const handleInstall = useCallback(
     (pkg: { name: string; version: string }) => {
       const { name, version } = pkg;
@@ -72,7 +80,6 @@ export function Playground() {
         .fetchFiles(name, version, compilerOptions)
         .then(files => {
           installer.install(name, version, files);
-          console.log({ dependencies });
           append(name, version);
           message.destroy();
           message.success(`Installed ${name}@${version}`);
@@ -142,7 +149,7 @@ export function Playground() {
             >
               <DependencyList
                 dependencies={dependencies}
-                onRequestRemove={remove}
+                onRequestRemove={handleUninstall}
                 onRequestOpenDialog={() => setShowDialog(true)}
               />
             </div>
