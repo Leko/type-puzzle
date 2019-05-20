@@ -1,10 +1,6 @@
 import React, { lazy, Suspense, useState, useCallback, useEffect } from "react";
 import { message, Layout, Tabs } from "antd";
-import {
-  parseConfigFileTextToJson,
-  CompilerOptions,
-  SourceFile
-} from "typescript";
+import { parseConfigFileTextToJson, CompilerOptions } from "typescript";
 import { editor, languages } from "monaco-editor";
 
 import { version } from "../package.json";
@@ -78,25 +74,15 @@ export function Playground() {
   );
   const handleInstall = useCallback(
     (pkgs: { name: string; version: string }[]) => {
-      const install = async (pkgs: { name: string; version: string }[]) => {
-        const files: SourceFile[] = [];
-        for (let pkg of pkgs) {
-          const { name, version } = pkg;
-          message.loading(`Install ${name}@${version} ...`, 10000);
-          const sources = await resolver.fetchFiles(
-            name,
-            version,
-            compilerOptions
-          );
-          files.push(...sources);
-        }
-        return files;
-      };
-
-      install(pkgs)
-        .then(files => {
+      pkgs.forEach(({ name, version }) => {
+        message.loading(`Install ${name}@${version} ...`, 10000);
+      });
+      resolver
+        .fetchFilesAll(pkgs, compilerOptions)
+        .then(filesList => {
           message.destroy();
-          pkgs.forEach(({ name, version }) => {
+          pkgs.forEach(({ name, version }, i) => {
+            const files = filesList[i];
             installer.install(name, version, files);
             message.success(`Installed ${name}@${version}`);
           });

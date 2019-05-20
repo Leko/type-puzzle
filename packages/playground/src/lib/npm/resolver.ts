@@ -37,6 +37,17 @@ export class Resolver {
     this.cache = new Map();
   }
 
+  async fetchFilesAll(
+    pkgs: { name: string; version: string }[],
+    compilerOptions: CompilerOptions
+  ): Promise<SourceFile[][]> {
+    return Promise.all(
+      pkgs.map(({ name, version }) => {
+        return this.fetchFiles(name, version, compilerOptions);
+      })
+    );
+  }
+
   async fetchFiles(
     name: string,
     version: string,
@@ -48,9 +59,9 @@ export class Resolver {
     const visited: SourceFile[] = [
       {
         fileName: "/package.json",
-        text:JSON.stringify(pkgDetail),
+        text: JSON.stringify(pkgDetail),
         getFullText() {
-          return this.text
+          return this.text;
         }
       } as SourceFile
     ];
