@@ -1,9 +1,11 @@
 import { gzip, ungzip } from "pako";
 import { CompilerOptions } from "typescript";
 
-type Config = {
+export type Config = {
   code: string;
-  tsconfig: CompilerOptions;
+  tsconfig: {
+    compilerOptions: CompilerOptions;
+  };
   dependencies: { name: string; version: string }[];
 };
 

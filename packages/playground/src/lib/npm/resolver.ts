@@ -94,6 +94,7 @@ export class Resolver {
           return;
         }
 
+        // @ts-ignore Property 'text' does not exist on type 'Expression'.
         const specifier = moduleSpecifier.text;
         if (!specifier.startsWith(".")) {
           console.log(`TODO: Install npm module recursively: ${specifier}`);

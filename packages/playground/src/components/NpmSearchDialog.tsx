@@ -13,8 +13,17 @@ type Props = {
 };
 
 function PackageAvatar({ pkg }: { pkg: NpmPackageSummary }) {
-  if (pkg.links.repository && pkg.links.repository.includes("github.com")) {
-    const [, matched] = pkg.links.repository.match(/github.com\/([^\/]+)/);
+  if (!pkg.links.repository) {
+    return <Avatar icon="user" />;
+  }
+
+  const matched = pkg.links.repository.match(/github.com\/([^\/]+)/);
+  if (!matched) {
+    return <Avatar icon="user" />;
+  }
+
+  const [, username] = matched;
+  if (username) {
     return <Avatar src={`https://github.com/${matched}.png?size=36`} />;
   } else {
     return <Avatar icon="user" />;

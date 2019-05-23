@@ -91,7 +91,7 @@ export class Searcher {
     const [{ objects, total }, exactMatch] = await Promise.all([
       fetch(`https://registry.npmjs.org/-/v1/search?${params.toString()}`).then(
         res => res.json()
-      ),
+      ) as Promise<NpmSearchResult>,
       fetch(`https://unpkg.com/${query}/package.json`).then(res => {
         return res.status === 200 ? res.json() : null;
       })

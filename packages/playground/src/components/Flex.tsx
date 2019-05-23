@@ -1,10 +1,10 @@
-import React, { StyleHTMLAttributes } from "react";
+import React from "react";
 
 type Props = {
   children: React.ReactNode;
   direction?: "column" | "row";
   flex?: "auto" | number;
-  style?: StyleHTMLAttributes<{}>;
+  style?: React.CSSProperties;
 };
 
 export function Flex({

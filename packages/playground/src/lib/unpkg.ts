@@ -1,9 +1,15 @@
-function _fetch(name: string, version: string, path: string) {
-  return fetch(`https://unpkg.com/${name}@${version}${path}`).then(res => {
-    return res.status === 404
-      ? Promise.reject(new Error("404 Not found"))
-      : res;
-  });
+function _fetch(
+  name: string,
+  version: string,
+  path: string
+): Promise<Response> {
+  return fetch(`https://unpkg.com/${name}@${version}${path}`).then(
+    (res: Response) => {
+      return res.status === 404
+        ? Promise.reject(new Error("404 Not found"))
+        : res;
+    }
+  );
 }
 
 function fetchAsJson<T>(

@@ -8,6 +8,7 @@
   "repository": "Leko/type-puzzle",
   "scripts": {
     "start": "webpack-dev-server",
+    "lint": "../../node_modules/.bin/tsc",
     "build": "webpack"
   },
   "dependencies": {
@@ -23,6 +24,8 @@
     "react-use": "^9.0.0"
   },
   "devDependencies": {
+    "@types/node": "^12.0.2",
+    "@types/pako": "^1.0.1",
     "@types/react": "^16.8.17",
     "@types/react-copy-to-clipboard": "^4.2.6",
     "@types/react-dom": "^16.8.4",
