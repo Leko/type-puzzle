@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:lts
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-dependencies-{{ checksum "package-lock.json" }}
+            - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-dependencies-
+      - run: npm install
+      - run: npx lerna bootstrap
+      - save_cache:
+          paths:
+            - node_modules
+            - packages/playground/node_modules
+            - .eslintcache
+          key: v{{ .Environment.CIRCLECI_CACHE_VERSION }}-dependencies-{{ checksum "package-lock.json" }}
+      - run: npm run lint
+      - run: cd packages/playground && npm run build
