@@ -141,7 +141,10 @@ export function Playground() {
             version={version}
             shareUrl={`${location.origin}?c=${sharableConfig}`}
             onRequestShare={handleRequestShare}
-            onCopy={() => message.success("Copied")}
+            onCopy={() => {
+              console.log("hoge");
+              message.success("Copied");
+            }}
           />
           <Flex flex={1}>
             <div
