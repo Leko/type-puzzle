@@ -9,6 +9,8 @@ import { useNpmSearch } from "./hooks/useNpmSearch";
 import { useNpmInstall } from "./hooks/useNpmInstall";
 import { Installer } from "./lib/npm/installer";
 import { Resolver } from "./lib/npm/resolver";
+import { Config } from "./lib/share";
+// @ts-ignore
 import ShareWorker from "comlink-loader!./lib/share";
 import { Share } from "./lib/share";
 import { Flex } from "./components/Flex";
@@ -111,7 +113,7 @@ export function Playground() {
     };
     new ShareWorker()
       .then((share: Share) => share.encode(config))
-      .then(str => setSharableConfig(str));
+      .then((str: string) => setSharableConfig(str));
   }, [code, compilerOptions, dependencies]);
 
   useEffect(() => {
@@ -126,7 +128,7 @@ export function Playground() {
 
     new ShareWorker()
       .then((share: Share) => share.decode(configStr))
-      .then(config => {
+      .then((config: Config) => {
         setCode(config.code);
         handleChangeTSConfig(JSON.stringify(config.tsconfig, null, 2));
         handleInstall(config.dependencies);
