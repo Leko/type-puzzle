@@ -8,6 +8,7 @@
   "repository": "Leko/type-puzzle",
   "scripts": {
     "start": "webpack-dev-server",
+    "lint": "../../node_modules/.bin/tsc",
     "build": "webpack"
   },
   "dependencies": {

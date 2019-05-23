@@ -19,4 +19,5 @@ jobs:
             - .eslintcache
           key: v{{ .Environment.CIRCLECI_CACHE_VERSION }}-dependencies-{{ checksum "package-lock.json" }}
       - run: npm run lint
-      - run: cd packages/playground && npm run build
+      - run: npx lerna run lint
+      - run: npx lerna run build
