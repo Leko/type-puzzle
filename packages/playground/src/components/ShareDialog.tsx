@@ -1,6 +1,6 @@
 import React, { useRef, useLayoutEffect, useCallback } from "react";
 import { Input } from "antd";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import CopyToClipboard from "react-copy-to-clipboard";
 import { Icon } from "./Icon";
 
 type Props = {
@@ -29,9 +29,11 @@ export function ShareDialog({ url, onCopy }: Props) {
         onFocus={onFocus}
         value={url}
         suffix={
-          <CopyToClipboard text={url} onCopy={onCopy}>
-            <Icon title="Copy to clipboard" type="copy" />
-          </CopyToClipboard>
+          url ? (
+            <CopyToClipboard text={url} onCopy={onCopy}>
+              <Icon title="Copy to clipboard" type="copy" />
+            </CopyToClipboard>
+          ) : null
         }
       />
     </div>

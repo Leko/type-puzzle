@@ -34,8 +34,8 @@ export default function AppBar({
       ]}
     >
       <p style={{ margin: 0 }}>
-        The unofficial playground for advanced TypeScript users. It can install
-        npm packages, highly configurable.
+        The unofficial TypeScript <strong>type checker</strong> for advanced
+        users. It can install npm packages and highly configurable.
       </p>
     </PageHeader>
   );

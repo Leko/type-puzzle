@@ -2,7 +2,6 @@
   "compilerOptions": {
     /* Basic Options */
     "jsx": "react" /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */,
-    "typeRoots": ["node_modules/@types"],
 
     /* Strict Type-Checking Options */
     // "strict": true /* Enable all strict type-checking options. */,
