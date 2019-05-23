@@ -17,7 +17,7 @@ export default function AppBar({
 }: Props) {
   return (
     <PageHeader
-      title="TypeScript playground"
+      title={<a href="/">TypeScript playground</a>}
       tags={<Tag>{version}</Tag>}
       extra={[
         <Popover
