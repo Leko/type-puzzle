@@ -1,3 +1,4 @@
+/* eslint-env node */
 // https://ant.design/docs/react/customize-theme
 module.exports = {
   "primary-color": "#007ACC",
