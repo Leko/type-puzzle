@@ -6,6 +6,7 @@ const PreloadWebpackPlugin = require("preload-webpack-plugin");
 const WebappWebpackPlugin = require("webapp-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const workboxPlugin = require("workbox-webpack-plugin");
 const theme = require("./theme");
 
 const ENTRY_PATH = path.resolve(__dirname, "src", "index.tsx");
@@ -88,6 +89,18 @@ module.exports = {
       as: "script"
     }),
     // https://github.com/webpack-contrib/compression-webpack-plugin#using-brotli
-    new CompressionPlugin()
+    new CompressionPlugin(),
+    // https://developers.google.com/web/tools/workbox/guides/codelabs/webpack
+    new workboxPlugin.GenerateSW({
+      swDest: "sw.js",
+      clientsClaim: true,
+      skipWaiting: true,
+      runtimeCaching: [
+        {
+          urlPattern: new RegExp("https://unpkg.com/.+@.+"),
+          handler: "cacheFirst"
+        }
+      ]
+    })
   ]
 };
