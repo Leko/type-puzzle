@@ -24,7 +24,7 @@ function PackageAvatar({ pkg }: { pkg: NpmPackageSummary }) {
 
   const [, username] = matched;
   if (username) {
-    return <Avatar src={`https://github.com/${matched}.png?size=36`} />;
+    return <Avatar src={`https://github.com/${username}.png?size=36`} />;
   } else {
     return <Avatar icon="user" />;
   }
