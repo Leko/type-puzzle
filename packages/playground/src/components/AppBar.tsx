@@ -6,6 +6,7 @@ type Props = {
   version: string;
   shareUrl?: string;
   onRequestShare: () => void;
+  onRequestFormat: () => void;
   onCopy: () => void;
 };
 
