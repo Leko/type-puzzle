@@ -29,13 +29,11 @@ export default function AppBar({
           content={<ShareDialog url={shareUrl} onCopy={onCopy} />}
           trigger="click"
         >
-          <>
-            <Button onClick={onRequestFormat}>Format</Button>
-            <Button type="primary" icon="link" onClick={onRequestShare}>
-              Share
-            </Button>
-          </>
-        </Popover>
+          <Button type="primary" icon="link" onClick={onRequestShare}>
+            Share
+          </Button>
+        </Popover>,
+        <Button onClick={onRequestFormat}>Format</Button>
       ]}
     >
       <p style={{ margin: 0 }}>
