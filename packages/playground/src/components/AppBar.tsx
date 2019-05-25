@@ -6,6 +6,7 @@ type Props = {
   version: string;
   shareUrl?: string;
   onRequestShare: () => void;
+  onRequestFormat: () => void;
   onCopy: () => void;
 };
 
@@ -13,6 +14,7 @@ export default function AppBar({
   version,
   shareUrl,
   onRequestShare,
+  onRequestFormat,
   onCopy
 }: Props) {
   return (
@@ -27,9 +29,12 @@ export default function AppBar({
           content={<ShareDialog url={shareUrl} onCopy={onCopy} />}
           trigger="click"
         >
-          <Button type="primary" onClick={onRequestShare}>
-            Share
-          </Button>
+          <>
+            <Button onClick={onRequestFormat}>Format</Button>
+            <Button type="primary" icon="link" onClick={onRequestShare}>
+              Share
+            </Button>
+          </>
         </Popover>
       ]}
     >

@@ -10,8 +10,11 @@ import { useNpmInstall } from "./hooks/useNpmInstall";
 import { Installer } from "./lib/npm/installer";
 import { Resolver } from "./lib/npm/resolver";
 import { Config } from "./lib/share";
+import { Prettier } from "./lib/prettier.js";
 // @ts-ignore
 import ShareWorker from "comlink-loader!./lib/share";
+// @ts-ignore
+import PrettierWorker from "comlink-loader!./lib/prettier";
 import { Share } from "./lib/share";
 import { Flex } from "./components/Flex";
 
@@ -115,6 +118,11 @@ export function Playground() {
       .then((share: Share) => share.encode(config))
       .then((str: string) => setSharableConfig(str));
   }, [code, compilerOptions, dependencies]);
+  const handlePrettify = useCallback(() => {
+    new PrettierWorker()
+      .then((prettier: Prettier) => prettier.format(code))
+      .then((code: string) => setCode(code));
+  }, [code]);
 
   useEffect(() => {
     if (location.search === "") {
@@ -143,6 +151,7 @@ export function Playground() {
             version={version}
             shareUrl={`${location.origin}?c=${sharableConfig}`}
             onRequestShare={handleRequestShare}
+            onRequestFormat={handlePrettify}
             onCopy={() => {
               console.log("hoge");
               message.success("Copied");
