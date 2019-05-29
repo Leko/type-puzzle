@@ -21,7 +21,7 @@
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
     "react-modal": "^3.8.1",
-    "react-monaco-editor": "^0.25.1",
+    "react-monaco-editor": "^0.26.1",
     "react-use": "^9.0.0"
   },
   "devDependencies": {
