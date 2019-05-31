@@ -22,6 +22,9 @@ export default function AppBar({
       title={<a href="/">TypeScript playground</a>}
       tags={<Tag>{version}</Tag>}
       extra={[
+        <Button key="2" onClick={onRequestFormat}>
+          Format
+        </Button>,
         <Popover
           key="1"
           placement="bottomRight"
@@ -32,8 +35,7 @@ export default function AppBar({
           <Button type="primary" icon="link" onClick={onRequestShare}>
             Share
           </Button>
-        </Popover>,
-        <Button onClick={onRequestFormat}>Format</Button>
+        </Popover>
       ]}
     >
       <p style={{ margin: 0 }}>
