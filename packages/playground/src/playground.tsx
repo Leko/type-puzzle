@@ -180,7 +180,7 @@ export function Playground() {
                 <CodeEditor
                   model={codeEditorModel}
                   value={code}
-                  onChange={setCode}
+                  onChange={code => setCode(code)}
                   editorDidMount={editor => {
                     setPrimaryEditor(editor);
                     setCode(codeEditorModel.getValue());
