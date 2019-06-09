@@ -12,6 +12,20 @@ function _fetch(
   );
 }
 
+export type MetaFile = {
+  path: string;
+  type: "file";
+  contentType: string; // FIXME: more strictly
+  integrity: string;
+  lastModified: string;
+  size: number;
+};
+export type MetaDirectry = {
+  path: string;
+  type: "directory";
+  files: (MetaFile | MetaDirectry)[];
+};
+
 function fetchAsJson<T>(
   name: string,
   version: string,
@@ -37,5 +51,9 @@ export class UnPkg {
 
   fetchAsJson<T extends {} = {}>(path: string) {
     return fetchAsJson<T>(this.name, this.version, path);
+  }
+
+  fetchFiles(): Promise<MetaDirectry> {
+    return fetchAsJson<MetaDirectry>(this.name, this.version, "/?meta");
   }
 }

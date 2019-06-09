@@ -6,6 +6,7 @@ export type NpmPackage = {
   main: string;
   typings: string;
   types: string;
+  dependencies: Record<string, string>;
 };
 
 export type NpmPackageSummary = {
