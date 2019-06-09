@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useState, useCallback, useEffect } from "react";
 import { message, Layout, Tabs } from "antd";
 import { parseConfigFileTextToJson, CompilerOptions } from "typescript";
 import { editor, languages } from "monaco-editor";
-
+import { version as tsVersion } from "typescript/package.json";
 import { version } from "../package.json";
 import { codeEditorModel, tsConfigEditorModel } from "./models";
 import { useNpmSearch } from "./hooks/useNpmSearch";
@@ -149,6 +149,7 @@ export function Playground() {
         <Flex direction="column" flex={1} style={{ height: "100%" }}>
           <AppBar
             version={version}
+            tsVersion={tsVersion}
             shareUrl={`${location.origin}?c=${sharableConfig}`}
             onRequestShare={handleRequestShare}
             onRequestFormat={handlePrettify}

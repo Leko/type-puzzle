@@ -4,6 +4,7 @@ import { ShareDialog } from "./ShareDialog";
 
 type Props = {
   version: string;
+  tsVersion: string;
   shareUrl?: string;
   onRequestShare: () => void;
   onRequestFormat: () => void;
@@ -12,6 +13,7 @@ type Props = {
 
 export default function AppBar({
   version,
+  tsVersion,
   shareUrl,
   onRequestShare,
   onRequestFormat,
@@ -20,7 +22,7 @@ export default function AppBar({
   return (
     <PageHeader
       title={<a href="/">TypeScript playground</a>}
-      tags={<Tag>{version}</Tag>}
+      tags={<><Tag>version: {version}</Tag><Tag>typescript: {tsVersion}</Tag></>}
       extra={[
         <Button key="2" onClick={onRequestFormat}>
           Format
