@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useDebounce from "react-use/esm/useDebounce";
-import { NpmSearchResultItem, Searcher } from "../lib/npm/searcher";
+import { NpmSearchResultItem, Searcher } from "../lib/npm/searcher-npms";
 
 const perPage = 20;
 const searcher = new Searcher();
