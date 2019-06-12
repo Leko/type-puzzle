@@ -97,7 +97,7 @@ module.exports = {
       skipWaiting: true,
       runtimeCaching: [
         {
-          urlPattern: new RegExp("https://unpkg.com/.+@.+"),
+          urlPattern: new RegExp("https://unpkg.com/.+@\\d+.\\d+.\\d+/"),
           handler: "cacheFirst"
         }
       ]
