@@ -1,0 +1,26 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-450202:
+    - antd > lodash:
+        patched: '2019-07-04T06:36:24.308Z'
+    - html-webpack-plugin > lodash:
+        patched: '2019-07-04T06:36:24.308Z'
+    - antd > rc-form > lodash:
+        patched: '2019-07-04T06:36:24.308Z'
+    - antd > rc-steps > lodash:
+        patched: '2019-07-04T06:36:24.308Z'
+    - antd > rc-table > lodash:
+        patched: '2019-07-04T06:36:24.308Z'
+    - antd > rc-tabs > lodash:
+        patched: '2019-07-04T06:36:24.308Z'
+    - webpack-dev-server > http-proxy-middleware > lodash:
+        patched: '2019-07-04T06:36:24.308Z'
+    - antd > rc-editor-mention > rc-editor-core > lodash:
+        patched: '2019-07-04T06:36:24.308Z'
+    - babel-plugin-import > @babel/helper-module-imports > @babel/types > lodash:
+        patched: '2019-07-04T06:36:24.308Z'
+    - webapp-webpack-plugin > favicons > cheerio > lodash:
+        patched: '2019-07-04T06:36:24.308Z'
