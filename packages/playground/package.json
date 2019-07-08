@@ -9,7 +9,9 @@
   "scripts": {
     "start": "webpack-dev-server",
     "lint": "../../node_modules/.bin/tsc",
-    "build": "webpack"
+    "build": "webpack",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "@sentry/browser": "^5.2.1",
@@ -22,7 +24,8 @@
     "react-dom": "^16.8.6",
     "react-modal": "^3.8.1",
     "react-monaco-editor": "^0.26.1",
-    "react-use": "^9.0.0"
+    "react-use": "^9.0.0",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "@types/node": "^12.0.2",
@@ -51,5 +54,6 @@
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.3.1",
     "workbox-webpack-plugin": "^4.3.1"
-  }
+  },
+  "snyk": true
 }
