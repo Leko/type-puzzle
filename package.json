@@ -1,6 +1,6 @@
 {
   "name": "type-puzzle",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Web application to post and solve TypeScript type puzzle",
   "main": "jest.config.js",
   "devDependencies": {
