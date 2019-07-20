@@ -21,3 +21,26 @@ jobs:
       - run: npm run lint
       - run: npx lerna run lint
       - run: npx lerna run build
+  deploy:
+    docker:
+      - image: circleci/node:lts
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-dependencies-{{ checksum "package-lock.json" }}
+            - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-dependencies-
+      - run: mkdir packages/playground/dist
+      - run: npx firebase deploy --only hosting --token=$FIREBASE_TOKEN
+workflows:
+  version: 2
+  test_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
