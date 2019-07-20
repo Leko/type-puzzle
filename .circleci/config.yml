@@ -31,7 +31,8 @@ jobs:
           keys:
             - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-dependencies-{{ checksum "package-lock.json" }}
             - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-dependencies-
-      - run: npx firebase deploy --token=$FIREBASE_TOKEN
+      - run: mkdir packages/playground/dist
+      - run: npx firebase deploy --only hosting --token=$FIREBASE_TOKEN
 workflows:
   version: 2
   test_deploy:
