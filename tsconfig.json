@@ -6,7 +6,7 @@
     // "declaration": true,
     // "declarationMap": true,
     "sourceMap": true,
-    "incremental": true,
+    // "incremental": true,
     "noEmit": true,
     "strict": true,
     "noUnusedLocals": true,
