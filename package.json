@@ -19,10 +19,15 @@
     "lint": "eslint . --cache",
     "deploy": "npm run prepare:playground && npx firebase deploy --only hosting",
     "prepare:playground": "NODE_ENV=production npm --prefix packages/playground run build --verbose",
-    "test": "jest"
+    "test": "jest",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": "Leko/type-puzzle",
   "author": "Leko <leko.noor@gmail.com>",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "snyk": "^1.230.5"
+  },
+  "snyk": true
 }
