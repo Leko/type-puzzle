@@ -24,3 +24,8 @@ patch:
         patched: '2019-07-04T06:36:24.308Z'
     - webapp-webpack-plugin > favicons > cheerio > lodash:
         patched: '2019-07-04T06:36:24.308Z'
+  SNYK-JS-HTTPSPROXYAGENT-469131:
+    - snyk > proxy-agent > https-proxy-agent:
+        patched: '2019-10-04T06:36:19.951Z'
+    - snyk > proxy-agent > pac-proxy-agent > https-proxy-agent:
+        patched: '2019-10-04T06:36:19.951Z'
