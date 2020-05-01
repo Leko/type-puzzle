@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.13.5
+version: v1.14.1
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -24,3 +24,46 @@ patch:
         patched: '2019-07-04T06:36:24.308Z'
     - webapp-webpack-plugin > favicons > cheerio > lodash:
         patched: '2019-07-04T06:36:24.308Z'
+  SNYK-JS-LODASH-567746:
+    - antd > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - snyk > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - html-webpack-plugin > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - antd > rc-form > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - antd > rc-steps > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - antd > rc-table > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - antd > rc-tabs > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - snyk > @snyk/dep-graph > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - snyk > inquirer > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - snyk > snyk-config > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - snyk > snyk-mvn-plugin > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - snyk > snyk-nodejs-lockfile-parser > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - snyk > snyk-nuget-plugin > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - webpack-dev-server > http-proxy-middleware > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - antd > rc-editor-mention > rc-editor-core > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - snyk > @snyk/dep-graph > graphlib > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - snyk > snyk-go-plugin > graphlib > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - snyk > snyk-nodejs-lockfile-parser > graphlib > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - snyk > snyk-php-plugin > @snyk/composer-lockfile-parser > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - babel-plugin-import > @babel/helper-module-imports > @babel/types > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
+    - webapp-webpack-plugin > favicons > cheerio > lodash:
+        patched: '2020-05-01T06:37:51.358Z'
